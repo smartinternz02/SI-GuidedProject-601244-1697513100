@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        /* ... (Your existing styles) ... */
+        body {
+            background-color: #eeeaea;
+            /* Dark background color */
+            color: #fff;
+            /* White text color */
+            background-image: url(falcon9.jpg);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: 10px auto;
+            background-color: rgba(0, 0, 0, 0.7);
+            /* Semi-transparent background for the form */
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            /* Box shadow for the form */
+        }
+        h1 {
+            color: #fff;
+            /* White color for the title */
+        }
+        .input-box {
+            margin: 5px 0;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        select {
+            width: 100%;
+            height: 40px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            padding: 10px;
+        }
+        .checkbox {
+            text-align: left;
+            margin-top: 20px;
+        }
+        button {
+            width: 100%;
+            background-color: #007BFF;
+            /* Blue button color */
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 10px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+            /* Darker blue color on hover */
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>SpaceX Falcon 9 First Stage Landing Success Predictor</h1>
+        <form class="form" onsubmit="return launchPrediction()">
+            <div class="input-box">
+                <label><b>Payload Mass</b></label>
+                <input required placeholder="Enter Payload Mass" type="text" id="payload-mass">
+            </div>
+            <div class="input-box">
+                <label for="orbit">Orbit</label>
+                <select required id="orbit">
+                    <option value="orbit">Select Orbit</option>
+                    <option value="leo">LEO</option>
+                    <option value="iss">ISS</option>
+                    <option value="meo">MEO</option>
+                    <option value="gto">GTO</option>
+                    <option value="vleo">VLEO</option>
+                    <option value="po">PO</option>
+                    <option value="sso">SSO</option>
+                    <option value="es-l1">ES-L1</option>
+                    <option value="heo">HEO</option>
+                    <option value="so">SO</option>
+                    <option value="geo">GEO</option>
+                </select>
+            </div>
+            <div class="input-box">
+                <label for="launch-site">Launch Site</label>
+                <select required id="launch-site">
+                    <option value="launch-site">Launch Site</option>
+                    <option value="clc4">CCSFS SLC 40</option>
+                    <option value="kl3">KSC LC 39A</option>
+                    <option value="bs4">VAFB SLC 4E</option>
+                </select>
+            </div>
+            <div class="input-box">
+                <label for="longitude">Longitude</label>
+                <select required id="longitude">
+                    <option value="-80">-80.5773</option>
+                    <option value="-80">-80.6039</option>
+                    <option value="-120">-120.61082</option>
+                </select>
+            </div>
+            <div class="input-box">
+                <label for="latitude">Latitude</label>
+                <select required id="latitude">
+                    <option value="28.5">28.561857</option>
+                    <option value="28.6">28.608058</option>
+                    <option value="34.6">34.632093</option>
+                </select>
+            </div>
+            <div class="checkbox">
+                <h4>Grid Fins</h4>
+                <label class="container">True
+                    <input type="checkbox" checked="checked">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="container">False
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+                <h4>Legs</h4>
+                <label class="container">True
+                    <input type="checkbox" checked="checked">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="container">False
+                    <input type="checkbox">
+                    <span class "checkmark"></span>
+                </label>
+            </div>
+            <div class="input-box">
+                <label for="grid-block">Grid Block Version</label>
+                <select required id="grid-block">
+                    <option value="1.0">1.0</option>
+                    <option value="5.0">5.0</option>
+                    <option value="3.0">3.0</option>
+                    <option value="4.0">4.0</option>
+                    <option value="2.0">2.0</option>
+                </select>
+            </div>
+            <div class="input-box">
+                <label for="flights">Flights with that Core</label>
+                <select required id="flights">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </div>
+            <div class="input-box">
+                <label for="core">Core Reused Count</label>
+                <select required id="core">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                </select>
+            </div>
+            <div class="input-box">
+                <button type="submit">Launch</button>
+            </div>
+
+        </form>
+    </div>
+<script>
+    function launchPrediction() {
+        var payloadMass = document.getElementById("payload-mass").value;
+        var Orbit = document.getElementById("orbit").value;
+    
+        if (payloadMass.trim() === "") {
+            alert("Please fill in the Payload Mass field.");
+            return false;
+        } else if (Orbit === 'orbit') {
+            alert("Please select an Orbit.");
+            return false;
+        } else if (payloadMass.trim() == '0' && Orbit != 'orbit') {
+            alert("Launch is not successful");
+            return false;
+        } else {
+            alert("Launch successful!");
+            return true;
+        }
+    }
+</script>
+</body>
+
+</html>
